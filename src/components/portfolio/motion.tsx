@@ -17,7 +17,7 @@ export function MotionProvider({ children }: { children: ReactNode }) {
   const enabled = userPref && !osReduce;
 
   useEffect(() => {
-    document.documentElement.dataset.motion = enabled ? "on" : "off";
+    document.documentElement.dataset["motion"] = enabled ? "on" : "off";
   }, [enabled]);
 
   const toggle = () =>

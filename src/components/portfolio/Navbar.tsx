@@ -38,7 +38,7 @@ export function Navbar() {
     });
     // cheap sentinel instead of a scroll listener
     const top = document.getElementById("top");
-    const s = new IntersectionObserver(([e]) => setScrolled(e.boundingClientRect.top < -20), { threshold: [0, 0.99, 1] });
+    const s = new IntersectionObserver((entries) => setScrolled((entries[0]?.boundingClientRect.top ?? 0) < -20), { threshold: [0, 0.99, 1] });
     if (top) s.observe(top);
     return () => { obs.disconnect(); s.disconnect(); };
   }, []);
