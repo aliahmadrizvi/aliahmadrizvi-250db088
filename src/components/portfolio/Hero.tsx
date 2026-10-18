@@ -38,6 +38,11 @@ export function Hero() {
           <span className="absolute -top-1 left-1/2 h-2 w-2 -translate-x-1/2 rounded-full bg-mint" />
         </div>
         <span className="label-mono absolute -left-24 top-1/2 text-mint">● learning</span>
+        <div className="absolute -bottom-20 left-10 rotate-6 bg-foreground px-4 py-3 text-background shadow-xl">
+          <span className="tape -top-3 left-1/2 -translate-x-1/2 rotate-3" />
+          <p className="label-mono">Nº 01 — Portfolio</p>
+          <p className="font-display text-sm font-black uppercase">Student edition</p>
+        </div>
       </motion.div>
 
       <div className="relative mx-auto w-full max-w-7xl px-5 sm:px-8">
@@ -46,9 +51,9 @@ export function Hero() {
         </motion.p>
         <h1 className="font-display font-black uppercase leading-[0.9] tracking-tighter text-[clamp(2.2rem,9.4vw,9.5rem)]">
           {lines.map((l, i) => (
-            <span key={l} className="block overflow-hidden pb-[0.04em]">
+            <span key={l} className={`block overflow-hidden pb-[0.04em] ${i === 1 ? "md:pl-[12%]" : ""} ${i === 2 ? "md:pl-[4%]" : ""}`}>
               <motion.span
-                className={`block ${i === 1 ? "text-outline" : ""} ${i === 2 ? "text-lavender" : ""}`}
+                className={`block ${i === 1 ? "text-outline" : ""} ${i === 2 ? "text-lavender [text-shadow:0_0_60px_color-mix(in_oklab,var(--lavender)_35%,transparent)]" : ""}`}
                 initial={enabled ? { y: "105%" } : false}
                 animate={{ y: 0 }}
                 transition={{ duration: 0.9, delay: 0.1 + i * 0.12, ease }}
