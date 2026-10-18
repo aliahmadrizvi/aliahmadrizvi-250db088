@@ -1,6 +1,7 @@
 import { ArrowUpRight, Github, Linkedin, Mail } from "lucide-react";
 import { site } from "@/data/site";
 import { Reveal } from "./ui";
+import { emailHref, externalProps, safeUrl } from "@/lib/links";
 
 function Ticket({ href, icon, label, value, external }: { href: string | null; icon: React.ReactNode; label: string; value: string; external?: boolean }) {
   const inner = (
@@ -18,8 +19,9 @@ function Ticket({ href, icon, label, value, external }: { href: string | null; i
   const cls = "group flex items-center justify-between gap-4 border-t border-dashed border-border py-5";
   if (!href) return <div className={`${cls} opacity-60`} aria-disabled="true">{inner}</div>;
   return (
-    <a href={href} className={`${cls} transition-colors hover:text-lavender`} {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}>
+    <a href={href} className={`${cls} transition-colors hover:text-lavender`} {...(external ? externalProps : {})}>
       {inner}
+      {external && <span className="sr-only">(opens in a new tab)</span>}
     </a>
   );
 }
@@ -50,9 +52,9 @@ export function Contact() {
           </Reveal>
           <Reveal delay={0.1}>
             <div className="border-b border-dashed border-border">
-              <Ticket href={site.email ? `mailto:${site.email}` : null} icon={<Mail size={16} />} label="Email" value={site.email ?? "Address coming soon"} />
-              <Ticket href={site.github} icon={<Github size={16} />} label="GitHub" value={site.github ? "View my code" : "Link coming soon"} external />
-              <Ticket href={site.linkedin} icon={<Linkedin size={16} />} label="LinkedIn" value={site.linkedin ? "Connect with me" : "Link coming soon"} external />
+              <Ticket href={emailHref(site.email)} icon={<Mail size={16} />} label="Email" value={emailHref(site.email) ? site.email! : "Address coming soon"} />
+              <Ticket href={safeUrl(site.github)} icon={<Github size={16} />} label="GitHub" value={safeUrl(site.github) ? "View my code" : "Link coming soon"} external />
+              <Ticket href={safeUrl(site.linkedin)} icon={<Linkedin size={16} />} label="LinkedIn" value={safeUrl(site.linkedin) ? "Connect with me" : "Link coming soon"} external />
             </div>
           </Reveal>
         </div>

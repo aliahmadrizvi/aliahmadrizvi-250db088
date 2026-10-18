@@ -9,4 +9,4 @@
 > the editor, so keep the branch in a working state.
 <!-- LOVABLE:END -->
 
-- Portfolio content (projects, skills, certificates, links) lives in src/data/site.ts; components in src/components/portfolio read from it — keeps edits in one place.
+- Personal/social links config lives in src/data/site.ts and project data in src/data/projects.ts; every outbound href goes through safeUrl/emailHref in src/lib/links.ts so placeholder or non-https values render as disabled instead of dead links.

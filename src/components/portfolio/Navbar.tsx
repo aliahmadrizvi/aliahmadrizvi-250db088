@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion, useScroll, useSpring } from "motion/react";
 import { Menu, X } from "lucide-react";
 import { navItems } from "@/data/site";
@@ -24,6 +24,9 @@ export function Navbar() {
   const [active, setActive] = useState("");
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const toggleRef = useRef<HTMLButtonElement>(null);
+  const menuRef = useRef<HTMLDivElement>(null);
+  const wasOpen = useRef(false);
   const { scrollYProgress } = useScroll();
   const progress = useSpring(scrollYProgress, { stiffness: 140, damping: 30, restDelta: 0.001 });
 
@@ -45,10 +48,19 @@ export function Navbar() {
 
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
-    if (!open) return;
+    if (!open) {
+      if (wasOpen.current) toggleRef.current?.focus({ preventScroll: true });
+      wasOpen.current = false;
+      return;
+    }
+    wasOpen.current = true;
+    menuRef.current?.querySelector("a")?.focus();
+    const mq = window.matchMedia("(min-width: 1024px)");
+    const onMq = () => mq.matches && setOpen(false);
+    mq.addEventListener("change", onMq);
     const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
     window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
+    return () => { window.removeEventListener("keydown", onKey); mq.removeEventListener("change", onMq); };
   }, [open]);
 
   const shown = active === "milestones" ? "certificates" : active;
@@ -79,6 +91,7 @@ export function Navbar() {
         <div className="flex items-center gap-2">
           <MotionToggle />
           <button
+            ref={toggleRef}
             type="button"
             className="grid h-10 w-10 place-items-center rounded-full border border-border lg:hidden"
             aria-label={open ? "Close menu" : "Open menu"}
@@ -91,7 +104,7 @@ export function Navbar() {
         </div>
       </nav>
       {open && (
-        <div id="mobile-menu" className="h-[calc(100dvh-4rem)] overflow-y-auto bg-background px-5 pt-8 lg:hidden">
+        <div ref={menuRef} id="mobile-menu" role="dialog" aria-label="Site menu" className="h-[calc(100dvh-4rem)] overflow-y-auto bg-background px-5 pt-8 lg:hidden">
           <ul className="flex flex-col gap-2">
             {navItems.map((n, i) => (
               <motion.li key={n.id} initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.05 }}>

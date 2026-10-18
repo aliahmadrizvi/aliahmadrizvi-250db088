@@ -1,5 +1,6 @@
 import { ArrowUpRight, GraduationCap } from "lucide-react";
 import { certificates, milestones } from "@/data/site";
+import { externalProps, safeUrl } from "@/lib/links";
 import { Reveal, Section, SectionHeading } from "./ui";
 
 export function Education() {
@@ -41,7 +42,7 @@ export function Certificates() {
               </div>
               <div className="mt-8 flex items-center justify-between border-t border-dashed border-border pt-4">
                 <span className="label-mono text-muted-foreground">{c.status}</span>
-                {c.url && <a href={c.url} target="_blank" rel="noopener noreferrer" aria-label={`View ${c.title}`} className="text-lavender"><ArrowUpRight size={18} /></a>}
+                {safeUrl(c.url) && <a href={safeUrl(c.url)!} {...externalProps} aria-label={`View ${c.title} credential (opens in a new tab)`} className="text-lavender"><ArrowUpRight size={18} /></a>}
               </div>
             </article>
           </Reveal>
