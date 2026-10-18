@@ -46,8 +46,17 @@ function Cover({ p }: { p: Project }) {
       </>
     ),
   };
+  const bg: Record<string, string> = {
+    "Gohar AI": "bg-[linear-gradient(160deg,color-mix(in_oklab,var(--mint)_12%,var(--background)),var(--background))]",
+    LeetMetric: "bg-[linear-gradient(0deg,color-mix(in_oklab,var(--lavender)_10%,var(--background)),var(--background))]",
+    StudySync: "bg-[repeating-linear-gradient(0deg,transparent_0_23px,var(--border)_23px_24px)] bg-background",
+    "Mehfil-e-Zaiqa": "bg-[radial-gradient(circle_at_80%_90%,color-mix(in_oklab,var(--mint)_10%,transparent),transparent_60%)] bg-background",
+    "Sabrina Fandom": "bg-background",
+  };
   return (
-    <div aria-hidden className="cover relative aspect-[16/10] overflow-hidden rounded-md border border-border bg-background">
+    <div aria-hidden className={`cover relative aspect-[16/10] md:max-h-[24rem] md:w-full overflow-hidden rounded-md border border-border ${bg[p.title] ?? "bg-background"}`}>
+      <span className="tape -top-2 left-8 z-10 -rotate-6" />
+      <span className="halftone absolute inset-0 opacity-10" />
       <div className="cover-art absolute inset-0 transition-transform duration-700 ease-out">{art[p.title]}</div>
       <span className="label-mono absolute bottom-3 left-3 text-muted-foreground">{p.no} / {p.category}</span>
     </div>

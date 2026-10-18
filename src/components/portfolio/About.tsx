@@ -13,13 +13,18 @@ export function About() {
       <SectionHeading index="01" label="About" title="Curious," accent="by design." />
       <div className="grid gap-12 md:grid-cols-[0.9fr_1.1fr] md:gap-16">
         <Reveal className="relative mx-auto w-full max-w-sm md:mx-0">
-          <div className="absolute -inset-3 -rotate-3 rounded-md border border-lavender/40" aria-hidden />
-          <div className="relative overflow-hidden rounded-md bg-surface">
-            <img src={portrait.url} alt="Portrait of Ali Ahmad Rizvi" loading="lazy" className="duotone aspect-[4/5] w-full object-cover object-top mix-blend-luminosity" />
-            <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-lavender/20" aria-hidden />
-            <p className="label-mono absolute bottom-4 left-4 text-foreground">Ali A. Rizvi — 2026</p>
-          </div>
-          <span className="label-mono absolute -right-2 -top-4 rotate-6 rounded-sm bg-mint px-2 py-1 text-accent-foreground">student</span>
+          <figure className="relative -rotate-2 bg-foreground/95 p-3 pb-12 shadow-2xl transition-transform duration-700 hover:rotate-0">
+            <span aria-hidden className="tape -left-6 top-4 -rotate-[35deg]" />
+            <span aria-hidden className="tape -right-6 bottom-16 -rotate-[35deg]" />
+            <div className="relative overflow-hidden bg-background">
+              <img src={portrait.url} alt="Portrait of Ali Ahmad Rizvi" loading="lazy" width={1060} height={1484} className="duotone aspect-[4/5] w-full object-cover object-top mix-blend-luminosity" />
+              <div className="absolute inset-0 bg-gradient-to-t from-lavender/30 via-transparent to-mint/10 mix-blend-color" aria-hidden />
+            </div>
+            <figcaption className="label-mono absolute bottom-4 left-4 right-4 flex justify-between text-background">
+              <span>Ali A. Rizvi</span><span>LKO · 2026</span>
+            </figcaption>
+          </figure>
+          <span className="label-mono absolute -right-3 -top-5 rotate-6 rounded-sm bg-mint px-2 py-1 text-accent-foreground">student</span>
         </Reveal>
         <div>
           <Reveal>

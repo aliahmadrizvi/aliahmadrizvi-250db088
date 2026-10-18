@@ -158,3 +158,42 @@ html[data-motion="off"] *, html[data-motion="off"] *::before, html[data-motion="
   animation: none !important;
   transition-duration: 0.01ms !important;
 }
+
+/* ---------- Phase 3 art direction ---------- */
+/* scrapbook tape strip */
+@utility tape {
+  position: absolute;
+  height: 1.4rem;
+  width: 5.5rem;
+  background: color-mix(in oklab, var(--foreground) 16%, transparent);
+  border-left: 1px dashed color-mix(in oklab, var(--foreground) 25%, transparent);
+  border-right: 1px dashed color-mix(in oklab, var(--foreground) 25%, transparent);
+  z-index: 2;
+}
+/* perforated stamp / ticket edge */
+@utility stamp {
+  background: var(--foreground);
+  color: var(--background);
+  -webkit-mask: radial-gradient(circle 4px at 4px 4px, transparent 98%, #000) -4px -4px / 12px 12px;
+          mask: radial-gradient(circle 4px at 4px 4px, transparent 98%, #000) -4px -4px / 12px 12px;
+}
+/* soft vignette for depth */
+@utility vignette {
+  &::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 59;
+    background: radial-gradient(ellipse at center, transparent 55%, color-mix(in oklab, var(--background) 70%, transparent) 100%);
+  }
+}
+/* atmospheric band between sections */
+@utility section-glow {
+  background:
+    radial-gradient(60% 50% at 50% 0%, color-mix(in oklab, var(--lavender) 9%, transparent), transparent 70%);
+}
+@utility halftone {
+  background-image: radial-gradient(color-mix(in oklab, var(--foreground) 22%, transparent) 1px, transparent 1.2px);
+  background-size: 8px 8px;
+}
