@@ -4,9 +4,9 @@ export const site = {
   name: "Ali Ahmad Rizvi",
   role: "B.Tech CSE Student",
   location: "Lucknow, India",
-  email: null as string | null, // e.g. "you@example.com"
-  github: null as string | null, // e.g. "https://github.com/username"
-  linkedin: null as string | null, // e.g. "https://linkedin.com/in/username"
+  email: "alirizviiii2024@gmail.com" as string | null, // e.g. "you@example.com"
+  github: "https://github.com/aliahmadrizvi" as string | null, // e.g. "https://github.com/username"
+  linkedin: "https://www.linkedin.com/in/ali-ahmad-rizvi-389311377/" as string | null, // e.g. "https://linkedin.com/in/username"
 };
 
 export const navItems = [
