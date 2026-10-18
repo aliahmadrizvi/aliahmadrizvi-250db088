@@ -1,4 +1,5 @@
-// Edit personal links here. Leave a value as null to hide its button.
+// SINGLE CONFIG for personal + social links. Use real values only;
+// null (or an invalid/non-https URL) keeps that button disabled.
 export const site = {
   name: "Ali Ahmad Rizvi",
   role: "B.Tech CSE Student",
@@ -26,35 +27,7 @@ export const skillGroups = [
   { no: "04", title: "Tools", items: ["Git", "GitHub", "JupyterLab"] },
 ];
 
-export type ProjectCategory = "Web Development" | "AI";
-export type Project = {
-  no: string;
-  title: string;
-  category: ProjectCategory;
-  tagline: string;
-  description: string;
-  tags: string[];
-  github: string | null;
-  demo: string | null;
-};
-
-export const projects: Project[] = [
-  { no: "01", title: "Gohar AI", category: "AI", tagline: "Multilingual farming assistant — concept",
-    description: "A concept for making practical agricultural guidance more accessible to farmers in Hindi and Awadhi.",
-    tags: ["Python", "FastAPI", "Gemma", "RAG"], github: null, demo: null },
-  { no: "02", title: "LeetMetric", category: "Web Development", tagline: "Coding progress, visualised",
-    description: "A web project exploring coding progress and problem-solving activity.",
-    tags: ["HTML", "CSS", "JavaScript"], github: null, demo: null },
-  { no: "03", title: "StudySync", category: "Web Development", tagline: "Study resources, organised",
-    description: "A student-focused web project exploring the presentation of study resources and learning workflows.",
-    tags: ["HTML", "CSS", "JavaScript"], github: null, demo: null },
-  { no: "04", title: "Mehfil-e-Zaiqa", category: "Web Development", tagline: "A recipe website concept",
-    description: "Rich editorial typography, food-inspired visual styling and recipe categories.",
-    tags: ["HTML", "CSS", "Typography"], github: null, demo: null },
-  { no: "05", title: "Sabrina Fandom", category: "Web Development", tagline: "A fan-page design study",
-    description: "A fan-page project for practising visual web design and content presentation.",
-    tags: ["HTML", "CSS", "Visual design"], github: null, demo: null },
-];
+export { projects, type Project, type ProjectCategory } from "./projects";
 
 export const certificates = [
   { issuer: "IBM", title: "Web Development Fundamentals", status: "Issued 2026", url: null as string | null },

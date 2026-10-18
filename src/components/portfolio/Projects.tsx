@@ -2,6 +2,7 @@ import { useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { ArrowUpRight, Github } from "lucide-react";
 import { projects, type Project, type ProjectCategory } from "@/data/site";
+import { externalProps, safeUrl } from "@/lib/links";
 import { Section, SectionHeading, Tag } from "./ui";
 
 const filters: ("All" | ProjectCategory)[] = ["All", "Web Development", "AI"];
@@ -107,10 +108,10 @@ export function Projects() {
                   </h3>
                   <p className="mt-4 max-w-xl leading-relaxed text-muted-foreground">{p.description}</p>
                   <div className="mt-4 flex flex-wrap gap-2">{p.tags.map((t) => <Tag key={t}>{t}</Tag>)}</div>
-                  {(p.github || p.demo) && (
-                    <div className="mt-5 flex gap-4">
-                      {p.github && <a href={p.github} target="_blank" rel="noopener noreferrer" className="label-mono inline-flex items-center gap-1 hover:text-mint"><Github size={14} /> GitHub</a>}
-                      {p.demo && <a href={p.demo} target="_blank" rel="noopener noreferrer" className="label-mono inline-flex items-center gap-1 hover:text-mint">Live Demo <ArrowUpRight size={14} /></a>}
+                  {(safeUrl(p.github) || safeUrl(p.demo)) && (
+                    <div className="mt-5 flex gap-3">
+                      {safeUrl(p.github) && <a href={safeUrl(p.github)!} {...externalProps} aria-label={`${p.title} on GitHub (opens in a new tab)`} className="label-mono inline-flex items-center gap-1 rounded-full border border-border px-4 py-2 hover:border-mint hover:text-mint"><Github size={14} /> GitHub</a>}
+                      {safeUrl(p.demo) && <a href={safeUrl(p.demo)!} {...externalProps} aria-label={`${p.title} live demo (opens in a new tab)`} className="label-mono inline-flex items-center gap-1 rounded-full border border-border px-4 py-2 hover:border-mint hover:text-mint">Live Demo <ArrowUpRight size={14} /></a>}
                     </div>
                   )}
                 </div>
