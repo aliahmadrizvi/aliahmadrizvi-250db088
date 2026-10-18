@@ -1,0 +1,44 @@
+import { motion, useReducedMotion } from "motion/react";
+import type { ReactNode } from "react";
+
+export function Reveal({ children, delay = 0, className }: { children: ReactNode; delay?: number; className?: string }) {
+  const reduce = useReducedMotion();
+  return (
+    <motion.div
+      className={className}
+      initial={reduce ? false : { opacity: 0, y: 28 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-80px" }}
+      transition={{ duration: 0.7, delay, ease: [0.22, 1, 0.36, 1] }}
+    >
+      {children}
+    </motion.div>
+  );
+}
+
+export function SectionHeading({ index, label, title, accent }: { index: string; label: string; title: string; accent?: string }) {
+  return (
+    <Reveal className="mb-12 md:mb-16">
+      <p className="label-mono mb-4 flex items-center gap-3 text-muted-foreground">
+        <span className="text-mint">{index}</span>
+        <span className="h-px w-10 bg-border" />
+        {label}
+      </p>
+      <h2 className="font-display text-4xl font-bold uppercase leading-[0.95] tracking-tight sm:text-5xl md:text-7xl">
+        {title} {accent && <span className="text-outline">{accent}</span>}
+      </h2>
+    </Reveal>
+  );
+}
+
+export function Section({ id, children, className = "" }: { id: string; children: ReactNode; className?: string }) {
+  return (
+    <section id={id} className={`relative mx-auto w-full max-w-7xl px-5 py-24 sm:px-8 md:py-36 ${className}`}>
+      {children}
+    </section>
+  );
+}
+
+export function Tag({ children }: { children: ReactNode }) {
+  return <span className="label-mono rounded-full border border-border px-3 py-1 text-[0.65rem] text-muted-foreground">{children}</span>;
+}
