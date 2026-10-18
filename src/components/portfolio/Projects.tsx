@@ -54,7 +54,7 @@ function Cover({ p }: { p: Project }) {
     "Sabrina Fandom": "bg-background",
   };
   return (
-    <div aria-hidden className={`cover relative aspect-[16/10] overflow-hidden rounded-md border border-border ${bg[p.title] ?? "bg-background"}`}>
+    <div aria-hidden className={`cover relative aspect-[16/10] md:max-h-[24rem] md:w-full overflow-hidden rounded-md border border-border ${bg[p.title] ?? "bg-background"}`}>
       <span className="tape -top-2 left-8 z-10 -rotate-6" />
       <span className="halftone absolute inset-0 opacity-10" />
       <div className="cover-art absolute inset-0 transition-transform duration-700 ease-out">{art[p.title]}</div>

@@ -42,7 +42,7 @@ export function Contact() {
             <p className="max-w-md text-lg leading-relaxed text-muted-foreground">
               Open to internships, student collaborations and conversations about technology that serves people. Say hello — I read everything.
             </p>
-            <div className="stamp mt-10 inline-block -rotate-3 px-5 py-4">
+            <div className="mt-10 inline-block -rotate-3 rounded-sm border-2 border-dashed border-lavender/60 px-5 py-4 text-lavender">
               <p className="label-mono">Posted from</p>
               <p className="font-display text-xl font-black uppercase">Lucknow, IN</p>
               <p className="label-mono">Reply welcome ✦</p>

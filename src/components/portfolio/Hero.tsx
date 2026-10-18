@@ -38,11 +38,6 @@ export function Hero() {
           <span className="absolute -top-1 left-1/2 h-2 w-2 -translate-x-1/2 rounded-full bg-mint" />
         </div>
         <span className="label-mono absolute -left-24 top-1/2 text-mint">● learning</span>
-        <div className="absolute -bottom-20 left-10 rotate-6 bg-foreground px-4 py-3 text-background shadow-xl">
-          <span className="tape -top-3 left-1/2 -translate-x-1/2 rotate-3" />
-          <p className="label-mono">Nº 01 — Portfolio</p>
-          <p className="font-display text-sm font-black uppercase">Student edition</p>
-        </div>
       </motion.div>
 
       <div className="relative mx-auto w-full max-w-7xl px-5 sm:px-8">
