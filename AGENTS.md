@@ -8,3 +8,5 @@
 > Commits you push to the connected branch sync back to Lovable and show up in
 > the editor, so keep the branch in a working state.
 <!-- LOVABLE:END -->
+
+- Portfolio content (projects, skills, certificates, links) lives in src/data/site.ts; components in src/components/portfolio read from it — keeps edits in one place.
