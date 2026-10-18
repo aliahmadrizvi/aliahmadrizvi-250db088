@@ -1,10 +1,58 @@
 import { useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { ArrowUpRight, Github } from "lucide-react";
-import { projects, type ProjectCategory } from "@/data/site";
+import { projects, type Project, type ProjectCategory } from "@/data/site";
 import { Section, SectionHeading, Tag } from "./ui";
 
 const filters: ("All" | ProjectCategory)[] = ["All", "Web Development", "AI"];
+
+/** Original CSS-only cover art per project — no stock imagery. */
+function Cover({ p }: { p: Project }) {
+  const art: Record<string, React.ReactNode> = {
+    "Gohar AI": (
+      <>
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_70%,var(--mint)_0%,transparent_45%)] opacity-40" />
+        {[0, 1, 2, 3, 4].map((i) => (
+          <span key={i} className="absolute left-0 right-0 h-px bg-mint/40" style={{ top: `${30 + i * 12}%`, transform: `rotate(${-6 + i * 3}deg)` }} />
+        ))}
+        <span className="absolute right-6 top-6 font-display text-6xl font-black text-mint/80">अ</span>
+      </>
+    ),
+    LeetMetric: (
+      <div className="absolute inset-x-6 bottom-6 flex h-2/3 items-end gap-2">
+        {[30, 55, 40, 75, 60, 90, 70].map((h, i) => (
+          <span key={i} className="flex-1 rounded-t-sm bg-lavender/60" style={{ height: `${h}%` }} />
+        ))}
+      </div>
+    ),
+    StudySync: (
+      <>
+        {[0, 1, 2].map((i) => (
+          <span key={i} className="absolute h-2/3 w-1/2 rounded-md border border-lavender/50 bg-surface" style={{ left: `${18 + i * 10}%`, top: `${14 + i * 6}%`, transform: `rotate(${-8 + i * 7}deg)` }} />
+        ))}
+      </>
+    ),
+    "Mehfil-e-Zaiqa": (
+      <>
+        <div className="absolute -bottom-10 -right-10 h-48 w-48 rounded-full border-[18px] border-mint/30" />
+        <span className="absolute left-6 top-6 font-display text-5xl font-black italic text-lavender/80">Zaiqa</span>
+      </>
+    ),
+    "Sabrina Fandom": (
+      <>
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_30%,var(--lavender)_0%,transparent_50%)] opacity-50" />
+        <span className="absolute left-8 top-8 rotate-[-6deg] rounded-sm bg-foreground/90 px-2 py-1 font-display text-xs font-black text-background">FAN PAGE</span>
+        <span className="absolute bottom-6 right-6 text-5xl text-lavender">✦</span>
+      </>
+    ),
+  };
+  return (
+    <div aria-hidden className="cover relative aspect-[16/10] overflow-hidden rounded-md border border-border bg-background">
+      <div className="cover-art absolute inset-0 transition-transform duration-700 ease-out">{art[p.title]}</div>
+      <span className="label-mono absolute bottom-3 left-3 text-muted-foreground">{p.no} / {p.category}</span>
+    </div>
+  );
+}
 
 export function Projects() {
   const [filter, setFilter] = useState<(typeof filters)[number]>("All");
@@ -26,28 +74,29 @@ export function Projects() {
           </button>
         ))}
       </div>
+      <p className="sr-only" aria-live="polite">{list.length} projects shown</p>
 
-      <ul className="border-t border-border">
-        <AnimatePresence initial={false}>
+      <motion.ul layout className="grid gap-6 md:grid-cols-2">
+        <AnimatePresence mode="popLayout" initial={false}>
           {list.map((p, i) => (
             <motion.li
               key={p.title}
               layout
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="group relative border-b border-border"
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-60px" }}
+              exit={{ opacity: 0, scale: 0.96 }}
+              transition={{ duration: 0.6, delay: (i % 2) * 0.08, ease: [0.22, 1, 0.36, 1] }}
+              className={i === 0 && list.length > 1 ? "md:col-span-2" : ""}
             >
-              <article className={`grid gap-6 py-10 md:grid-cols-12 md:items-center md:py-14 ${i % 2 ? "md:text-right" : ""}`}>
-                <span className={`label-mono text-mint md:col-span-1 ${i % 2 ? "md:order-3" : ""}`}>{p.no}</span>
-                <div className={`md:col-span-7 ${i % 2 ? "md:order-2" : ""}`}>
-                  <p className="label-mono mb-3 text-muted-foreground">{p.category} · {p.tagline}</p>
-                  <h3 className="font-display text-4xl font-black uppercase leading-none tracking-tight transition-colors duration-300 group-hover:text-lavender sm:text-5xl lg:text-6xl">
+              <article className="project-card group h-full rounded-lg border border-border bg-surface p-4 transition-[transform,box-shadow,border-color] duration-500 hover:-translate-y-1 hover:border-lavender/40 hover:shadow-glow focus-within:border-lavender/40 sm:p-5">
+                <Cover p={p} />
+                <div className="mt-6 px-1 pb-2">
+                  <p className="label-mono mb-2 text-muted-foreground"><span className="text-mint">{p.no}</span> · {p.tagline}</p>
+                  <h3 className="font-display text-3xl font-black uppercase leading-none tracking-tight transition-colors duration-300 group-hover:text-lavender sm:text-4xl">
                     {p.title}
                   </h3>
-                </div>
-                <div className={`md:col-span-4 ${i % 2 ? "md:order-1 md:text-left" : ""}`}>
-                  <p className="leading-relaxed text-muted-foreground">{p.description}</p>
+                  <p className="mt-4 max-w-xl leading-relaxed text-muted-foreground">{p.description}</p>
                   <div className="mt-4 flex flex-wrap gap-2">{p.tags.map((t) => <Tag key={t}>{t}</Tag>)}</div>
                   {(p.github || p.demo) && (
                     <div className="mt-5 flex gap-4">
@@ -57,11 +106,10 @@ export function Projects() {
                   )}
                 </div>
               </article>
-              <span aria-hidden className="pointer-events-none absolute inset-x-0 bottom-0 h-px origin-left scale-x-0 bg-lavender transition-transform duration-500 group-hover:scale-x-100" />
             </motion.li>
           ))}
         </AnimatePresence>
-      </ul>
+      </motion.ul>
     </Section>
   );
 }
