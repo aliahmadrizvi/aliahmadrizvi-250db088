@@ -25,7 +25,7 @@ export function Hero() {
         <p className="label-mono mb-6 inline-flex items-center gap-2 rounded-full border border-border px-3 py-1.5 text-muted-foreground">
           <span className="h-1.5 w-1.5 rounded-full bg-mint" /> CSE Student · Lucknow, India
         </p>
-        <h1 className="font-display font-black uppercase leading-[0.9] tracking-tighter text-[clamp(2.4rem,10.5vw,9.5rem)]">
+        <h1 className="font-display font-black uppercase leading-[0.9] tracking-tighter text-[clamp(2.2rem,9.4vw,9.5rem)]">
           {lines.map((l, i) => (
             <span key={l} className="block overflow-hidden">
               <motion.span
