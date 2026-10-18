@@ -18,6 +18,21 @@ export const Route = createFileRoute("/")({
       { property: "og:description", content: "A Computer Science student exploring software and thoughtful digital experiences." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "Ali Ahmad Rizvi — Developer Portfolio" },
+      { name: "twitter:description", content: "A Computer Science student exploring software and thoughtful digital experiences." },
+    ],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "Person",
+          name: "Ali Ahmad Rizvi",
+          jobTitle: "B.Tech Computer Science and Engineering student",
+          affiliation: { "@type": "CollegeOrUniversity", name: "Integral University, Lucknow" },
+          sameAs: ["https://github.com/aliahmadrizvi", "https://www.linkedin.com/in/ali-ahmad-rizvi-389311377/"],
+        }),
+      },
     ],
   }),
   component: Index,
