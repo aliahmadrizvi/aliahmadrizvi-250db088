@@ -24,7 +24,7 @@ export const Route = createFileRoute("/")({
 
 function Index() {
   return (
-    <div className="grain">
+    <div className="grain overflow-x-clip">
       <a href="#about" className="label-mono sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[70] focus:rounded focus:bg-lavender focus:px-3 focus:py-2 focus:text-primary-foreground">Skip to content</a>
       <Navbar />
       <main>
