@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { MotionProvider } from "@/components/portfolio/motion";
 import { Navbar } from "@/components/portfolio/Navbar";
 import { Hero } from "@/components/portfolio/Hero";
 import { Marquee } from "@/components/portfolio/Marquee";
@@ -24,6 +25,7 @@ export const Route = createFileRoute("/")({
 
 function Index() {
   return (
+    <MotionProvider>
     <div className="grain overflow-x-clip">
       <a href="#about" className="label-mono sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[70] focus:rounded focus:bg-lavender focus:px-3 focus:py-2 focus:text-primary-foreground">Skip to content</a>
       <Navbar />
@@ -40,5 +42,6 @@ function Index() {
       </main>
       <Footer />
     </div>
+    </MotionProvider>
   );
 }

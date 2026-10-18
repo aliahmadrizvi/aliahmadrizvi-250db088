@@ -114,11 +114,47 @@
 }
 
 @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
-@utility animate-marquee { animation: marquee 40s linear infinite; }
+@utility animate-marquee { animation: marquee 40s linear infinite; will-change: transform; }
 
 @keyframes scroll-dot { 0% { transform: translateY(0); opacity: 1; } 80% { transform: translateY(14px); opacity: 0; } 100% { opacity: 0; } }
 @utility animate-scroll-dot { animation: scroll-dot 1.8s ease-in-out infinite; }
 
 @utility duotone {
   filter: grayscale(1) contrast(1.1) brightness(0.95);
+}
+
+/* ---------- Phase 2 motion system ---------- */
+@utility glow-orb-mint {
+  background: radial-gradient(circle, color-mix(in oklab, var(--mint) 45%, transparent) 0%, transparent 65%);
+  filter: blur(50px);
+}
+
+@keyframes drift { 0%,100% { transform: translate3d(0,0,0) scale(1); } 50% { transform: translate3d(-40px,30px,0) scale(1.08); } }
+@utility animate-drift { animation: drift 18s ease-in-out infinite; }
+@utility animate-drift-slow { animation: drift 26s ease-in-out infinite reverse; }
+
+@keyframes orbit { to { transform: rotate(360deg); } }
+@utility animate-orbit { animation: orbit 24s linear infinite; }
+
+@keyframes sweep { 0%, 70% { transform: translateX(-120%) skewX(-20deg); } 100% { transform: translateX(220%) skewX(-20deg); } }
+@utility light-sweep {
+  overflow: hidden;
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0; bottom: 0; left: 0;
+    width: 30%;
+    background: linear-gradient(90deg, transparent, color-mix(in oklab, var(--lavender) 10%, transparent), transparent);
+    animation: sweep 11s ease-in-out infinite;
+  }
+}
+
+.marquee:hover .animate-marquee { animation-play-state: paused; }
+.project-card:hover .cover-art, .project-card:focus-within .cover-art { transform: scale(1.06); }
+
+/* Motion Off (toggle or OS preference): stop all decorative animation */
+html[data-motion="off"] { scroll-behavior: auto; }
+html[data-motion="off"] *, html[data-motion="off"] *::before, html[data-motion="off"] *::after {
+  animation: none !important;
+  transition-duration: 0.01ms !important;
 }
