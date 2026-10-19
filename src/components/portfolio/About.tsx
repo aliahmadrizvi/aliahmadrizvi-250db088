@@ -1,4 +1,3 @@
-import portrait from "@/assets/ali-portrait.png.asset.json";
 import { Reveal, Section, SectionHeading } from "./ui";
 
 const highlights = [
@@ -17,8 +16,7 @@ export function About() {
             <span aria-hidden className="tape -left-6 top-4 -rotate-[35deg]" />
             <span aria-hidden className="tape -right-6 bottom-16 -rotate-[35deg]" />
             <div className="relative overflow-hidden bg-background">
-              <img src={portrait.url} alt="Portrait of Ali Ahmad Rizvi" loading="lazy" width={1060} height={1484} className="duotone aspect-[4/5] w-full object-cover object-top mix-blend-luminosity" />
-              <div className="absolute inset-0 bg-gradient-to-t from-lavender/30 via-transparent to-mint/10 mix-blend-color" aria-hidden />
+              <img src="/ali-portrait.jpeg" alt="Portrait of Ali Ahmad Rizvi" loading="lazy" width={1060} height={1484} className="aspect-[4/5] w-full object-cover object-top" />
             </div>
             <figcaption className="label-mono absolute bottom-4 left-4 right-4 flex justify-between text-background">
               <span>Ali A. Rizvi</span><span>LKO · 2026</span>
