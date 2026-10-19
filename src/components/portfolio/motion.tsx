@@ -14,7 +14,10 @@ export function MotionProvider({ children }: { children: ReactNode }) {
     if (localStorage.getItem(KEY) === "off") setUserPref(false);
   }, []);
 
-  const enabled = userPref && !osReduce;
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+  // Read the OS setting only after hydration so server and client markup match.
+  const enabled = userPref && !(mounted && osReduce);
 
   useEffect(() => {
     document.documentElement.dataset["motion"] = enabled ? "on" : "off";
