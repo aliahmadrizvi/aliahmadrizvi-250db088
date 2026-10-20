@@ -2,7 +2,10 @@ import { useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { ArrowUpRight, Github } from "lucide-react";
 import { projects, type Project, type ProjectCategory } from "@/data/site";
-import { externalProps, safeUrl } from "@/lib/links";
+import { Button as ControlButton } from "@/components/ui/button";
+import { Button } from "./Button";
+import { useMotionSettings } from "./motion";
+import { safeUrl } from "@/lib/links";
 import { Section, SectionHeading, Tag } from "./ui";
 
 const filters: ("All" | ProjectCategory)[] = ["All", "Web Development", "AI"];
@@ -18,6 +21,16 @@ function Cover({ p }: { p: Project }) {
         ))}
         <span className="absolute right-6 top-6 font-display text-6xl font-black text-mint/80">अ</span>
       </>
+    ),
+    "Smart Logistics & Accessibility Intelligence Platform": (
+      <div className="absolute inset-8 grid grid-cols-3 grid-rows-3 gap-3" >
+        <div className="col-span-3 border-b border-lavender/40" />
+        <div className="row-span-2 border-r border-mint/40" />
+        <div className="col-span-2 row-span-2 grid place-items-center border border-border"><span className="font-display text-3xl text-lavender">NER ↗</span></div>
+      </div>
+    ),
+    ResQ: (
+      <div className="absolute inset-8 flex items-center justify-center gap-4"><span className="font-display text-6xl text-mint">+</span><span className="font-display text-4xl font-bold text-lavender">ResQ</span></div>
     ),
     LeetMetric: (
       <div className="absolute inset-x-6 bottom-6 flex h-2/3 items-end gap-2">
@@ -65,38 +78,40 @@ function Cover({ p }: { p: Project }) {
 }
 
 export function Projects() {
+  const { enabled } = useMotionSettings();
   const [filter, setFilter] = useState<(typeof filters)[number]>("All");
   const list = projects.filter((p) => filter === "All" || p.category === filter);
 
   return (
     <Section id="projects">
-      <SectionHeading index="03" label="Selected Work" title="Things I'm" accent="building." />
+      <SectionHeading index="03" label="Featured Projects" title="Things I'm" accent="building." />
       <div role="group" aria-label="Filter projects" className="mb-10 flex flex-wrap gap-2">
         {filters.map((f) => (
-          <button
+          <ControlButton
             key={f}
             type="button"
+            variant="outline"
             aria-pressed={filter === f}
             onClick={() => setFilter(f)}
             className={`label-mono rounded-full border px-4 py-2 transition-colors ${filter === f ? "border-lavender bg-lavender text-primary-foreground" : "border-border text-muted-foreground hover:text-foreground"}`}
           >
             {f}
-          </button>
+          </ControlButton>
         ))}
       </div>
       <p className="sr-only" aria-live="polite">{list.length} projects shown</p>
 
-      <motion.ul layout className="grid gap-6 md:grid-cols-2">
+      <motion.ul layout={enabled} className="grid gap-6 md:grid-cols-2">
         <AnimatePresence mode="popLayout" initial={false}>
           {list.map((p, i) => (
             <motion.li
               key={p.title}
-              layout
-              initial={{ opacity: 0, y: 24 }}
+              layout={enabled}
+              initial={enabled ? { opacity: 0, y: 24 } : false}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-60px" }}
-              exit={{ opacity: 0, scale: 0.96 }}
-              transition={{ duration: 0.6, delay: (i % 2) * 0.08, ease: [0.22, 1, 0.36, 1] }}
+              exit={enabled ? { opacity: 0, scale: 0.96 } : { opacity: 1 }}
+              transition={{ duration: enabled ? 0.6 : 0, delay: enabled ? (i % 2) * 0.08 : 0, ease: [0.22, 1, 0.36, 1] }}
               className={i === 0 && list.length > 1 ? "md:col-span-2" : ""}
             >
               <article className="project-card group h-full rounded-lg border border-border bg-surface p-4 transition-[transform,box-shadow,border-color] duration-500 hover:-translate-y-1 hover:border-lavender/40 hover:shadow-glow focus-within:border-lavender/40 sm:p-5">
@@ -109,9 +124,9 @@ export function Projects() {
                   <p className="mt-4 max-w-xl leading-relaxed text-muted-foreground">{p.description}</p>
                   <div className="mt-4 flex flex-wrap gap-2">{p.tags.map((t) => <Tag key={t}>{t}</Tag>)}</div>
                   {(safeUrl(p.github) || safeUrl(p.demo)) && (
-                    <div className="mt-5 flex gap-3">
-                      {safeUrl(p.github) && <a href={safeUrl(p.github)!} {...externalProps} aria-label={`${p.title} on GitHub (opens in a new tab)`} className="label-mono inline-flex items-center gap-1 rounded-full border border-border px-4 py-2 hover:border-mint hover:text-mint"><Github size={14} /> GitHub</a>}
-                      {safeUrl(p.demo) && <a href={safeUrl(p.demo)!} {...externalProps} aria-label={`${p.title} live demo (opens in a new tab)`} className="label-mono inline-flex items-center gap-1 rounded-full border border-border px-4 py-2 hover:border-mint hover:text-mint">Live Demo <ArrowUpRight size={14} /></a>}
+                    <div className="mt-5 flex flex-wrap gap-3">
+                      {safeUrl(p.github) && <Button href={safeUrl(p.github)} variant="ghost" external><Github size={14} /> Source Code</Button>}
+                      {safeUrl(p.demo) && <Button href={safeUrl(p.demo)} variant="ghost" external>Live Demo <ArrowUpRight size={14} /></Button>}
                     </div>
                   )}
                 </div>

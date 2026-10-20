@@ -1,14 +1,16 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, useScroll, useSpring } from "motion/react";
 import { Menu, X } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import { navItems } from "@/data/site";
 import { useMotionSettings } from "./motion";
 
 function MotionToggle() {
   const { userPref, enabled, toggle } = useMotionSettings();
   return (
-    <button
+    <Button
       type="button"
+      variant="outline"
       onClick={toggle}
       aria-pressed={enabled}
       title={userPref && !enabled ? "Reduced by your system settings" : undefined}
@@ -16,7 +18,7 @@ function MotionToggle() {
     >
       <span className={`h-1.5 w-1.5 rounded-full ${enabled ? "bg-mint" : "bg-muted-foreground"}`} />
       Motion {enabled ? "On" : "Off"}
-    </button>
+    </Button>
   );
 }
 
@@ -35,7 +37,7 @@ export function Navbar() {
       (entries) => entries.forEach((e) => e.isIntersecting && setActive(e.target.id)),
       { rootMargin: "-45% 0px -50% 0px" },
     );
-    ["top", "milestones", ...navItems.map((n) => n.id)].forEach((id) => {
+    ["top", ...navItems.map((n) => n.id)].forEach((id) => {
       const el = document.getElementById(id);
       if (el) obs.observe(el);
     });
@@ -55,7 +57,7 @@ export function Navbar() {
     }
     wasOpen.current = true;
     menuRef.current?.querySelector("a")?.focus();
-    const mq = window.matchMedia("(min-width: 1024px)");
+    const mq = window.matchMedia("(min-width: 1280px)");
     const onMq = () => mq.matches && setOpen(false);
     mq.addEventListener("change", onMq);
     const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
@@ -63,7 +65,7 @@ export function Navbar() {
     return () => { window.removeEventListener("keydown", onKey); mq.removeEventListener("change", onMq); };
   }, [open]);
 
-  const shown = active === "milestones" ? "certificates" : active;
+  const shown = active;
 
   return (
     <header className={`fixed inset-x-0 top-0 z-50 transition-colors duration-300 ${scrolled || open ? "border-b border-border bg-background/85 backdrop-blur-md" : ""}`}>
@@ -72,13 +74,13 @@ export function Navbar() {
         <a href="#top" className="font-display text-sm font-bold tracking-tight">
           AAR<span className="text-lavender">.</span>
         </a>
-        <ul className="hidden items-center gap-1 lg:flex">
+        <ul className="hidden items-center gap-1 xl:flex">
           {navItems.map((n) => (
             <li key={n.id}>
               <a
                 href={`#${n.id}`}
                 aria-current={shown === n.id ? "true" : undefined}
-                className={`label-mono relative block rounded-full px-3 py-2 transition-colors hover:text-foreground ${shown === n.id ? "text-foreground" : "text-muted-foreground"}`}
+                className={`label-mono relative block rounded-full px-2 py-2 transition-colors hover:text-foreground ${shown === n.id ? "text-foreground" : "text-muted-foreground"}`}
               >
                 {shown === n.id && (
                   <motion.span layoutId="nav-pill" className="absolute inset-0 -z-10 rounded-full border border-lavender/40 bg-lavender/10" transition={{ type: "spring", stiffness: 380, damping: 32 }} />
@@ -90,21 +92,23 @@ export function Navbar() {
         </ul>
         <div className="flex items-center gap-2">
           <MotionToggle />
-          <button
+          <Button
+            variant="outline"
+            size="icon"
             ref={toggleRef}
             type="button"
-            className="grid h-10 w-10 place-items-center rounded-full border border-border lg:hidden"
+            className="grid h-10 w-10 place-items-center rounded-full border border-border xl:hidden"
             aria-label={open ? "Close menu" : "Open menu"}
             aria-expanded={open}
             aria-controls="mobile-menu"
             onClick={() => setOpen((o) => !o)}
           >
             {open ? <X size={18} /> : <Menu size={18} />}
-          </button>
+          </Button>
         </div>
       </nav>
       {open && (
-        <div ref={menuRef} id="mobile-menu" role="dialog" aria-label="Site menu" className="h-[calc(100dvh-4rem)] overflow-y-auto bg-background px-5 pt-8 lg:hidden">
+        <div ref={menuRef} id="mobile-menu" role="dialog" aria-label="Site menu" className="h-[calc(100dvh-4rem)] overflow-y-auto bg-background px-5 pt-8 xl:hidden">
           <ul className="flex flex-col gap-2">
             {navItems.map((n, i) => (
               <motion.li key={n.id} initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.05 }}>
