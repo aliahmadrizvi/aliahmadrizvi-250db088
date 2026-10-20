@@ -1,9 +1,11 @@
+import { site } from "@/data/site";
+import portrait from "@/assets/ali-portrait.png.asset.json";
 import { Reveal, Section, SectionHeading } from "./ui";
 
 const highlights = [
-  { k: "A", t: "Computer Science", d: "Building strong programming fundamentals." },
-  { k: "B", t: "Development and Data/AI", d: "Exploring web, data analysis and applied AI." },
-  { k: "C", t: "Learning by Building", d: "Turning concepts into small, real projects." },
+  { k: "A", t: "Software Engineering", d: "Strengthening fundamentals through C++ and Python DSA practice." },
+  { k: "B", t: "Frontend, Data & AI", d: "Building web projects while exploring analytics and AI applications." },
+  { k: "C", t: "Learning Together", d: "Collaborating at hackathons and turning ideas into practical prototypes." },
 ];
 
 export function About() {
@@ -16,7 +18,8 @@ export function About() {
             <span aria-hidden className="tape -left-6 top-4 -rotate-[35deg]" />
             <span aria-hidden className="tape -right-6 bottom-16 -rotate-[35deg]" />
             <div className="relative overflow-hidden bg-background">
-              <img src="/ali-portrait.jpeg" alt="Portrait of Ali Ahmad Rizvi" loading="lazy" width={1060} height={1484} className="aspect-[4/5] w-full object-cover object-top" />
+              <img src={portrait.url} alt="Portrait of Ali Ahmad Rizvi" loading="lazy" width={1060} height={1484} className="duotone aspect-[4/5] w-full object-cover object-top mix-blend-luminosity" />
+              <div className="absolute inset-0 bg-gradient-to-t from-lavender/30 via-transparent to-mint/10 mix-blend-color" aria-hidden />
             </div>
             <figcaption className="label-mono absolute bottom-4 left-4 right-4 flex justify-between text-background">
               <span>Ali A. Rizvi</span><span>LKO · 2026</span>
@@ -27,11 +30,13 @@ export function About() {
         <div>
           <Reveal>
             <p className="font-display text-2xl font-semibold leading-snug md:text-3xl">
-              I'm developing my programming fundamentals while exploring <span className="text-lavender">software development</span>, web design, data analysis and AI.
+              I'm working toward a future in <span className="text-lavender">software engineering</span> — one problem, project and collaboration at a time.
             </p>
             <p className="mt-6 max-w-xl leading-relaxed text-muted-foreground">
-              As a B.Tech CSE student, I learn best by making things — small websites, practice problems and early concepts that help me understand how technology can be more useful and more human.
+              As a B.Tech Computer Science and Engineering student at Integral University, Lucknow, I practice DSA using C++ and Python and build web projects to strengthen my programming fundamentals. My interests span frontend engineering, data analytics and AI.
             </p>
+          <p className="mt-4 max-w-xl leading-relaxed text-muted-foreground">Hackathons and project-based learning give me space to collaborate, prototype and learn from others. My next goal is a software development internship, with a long-term ambition to grow into an SDE role.</p>
+            <p className="label-mono mt-6 text-mint">{site.pronouns} · {site.university}</p>
           </Reveal>
           <ul className="mt-12 divide-y divide-border border-y border-border">
             {highlights.map((h, i) => (
