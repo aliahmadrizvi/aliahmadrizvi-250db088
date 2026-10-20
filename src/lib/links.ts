@@ -14,7 +14,7 @@ export function safeUrl(url: string | null | undefined): string | null {
 export function emailHref(email: string | null | undefined, subject?: string): string | null {
   const href = email ? safeUrl(`mailto:${email.trim()}`) : null;
   if (!href) return null;
-  return subject ? `${href}?subject=${encodeURIComponent(subject.trim().slice(0, 200))}` : href;
+  return subject ? `${href}?subject=${encodeURIComponent(subject.trim().slice(0, 200)).replace(/'/g, "%27")}` : href;
 }
 
 /** Props for links that open in a new tab — secure and announced to screen readers. */

@@ -29,6 +29,7 @@ export function Navbar() {
   const toggleRef = useRef<HTMLButtonElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
   const wasOpen = useRef(false);
+  const { enabled } = useMotionSettings();
   const { scrollYProgress } = useScroll();
   const progress = useSpring(scrollYProgress, { stiffness: 140, damping: 30, restDelta: 0.001 });
 
@@ -49,12 +50,13 @@ export function Navbar() {
   }, []);
 
   useEffect(() => {
-    document.body.style.overflow = open ? "hidden" : "";
     if (!open) {
       if (wasOpen.current) toggleRef.current?.focus({ preventScroll: true });
       wasOpen.current = false;
       return;
     }
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
     wasOpen.current = true;
     menuRef.current?.querySelector("a")?.focus();
     const mq = window.matchMedia("(min-width: 1280px)");
@@ -62,7 +64,7 @@ export function Navbar() {
     mq.addEventListener("change", onMq);
     const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
     window.addEventListener("keydown", onKey);
-    return () => { window.removeEventListener("keydown", onKey); mq.removeEventListener("change", onMq); };
+    return () => { document.body.style.overflow = previousOverflow; window.removeEventListener("keydown", onKey); mq.removeEventListener("change", onMq); };
   }, [open]);
 
   const shown = active;
@@ -83,7 +85,7 @@ export function Navbar() {
                 className={`label-mono relative block rounded-full px-2 py-2 transition-colors hover:text-foreground ${shown === n.id ? "text-foreground" : "text-muted-foreground"}`}
               >
                 {shown === n.id && (
-                  <motion.span layoutId="nav-pill" className="absolute inset-0 -z-10 rounded-full border border-lavender/40 bg-lavender/10" transition={{ type: "spring", stiffness: 380, damping: 32 }} />
+                  <motion.span layoutId={enabled ? "nav-pill" : undefined} className="absolute inset-0 -z-10 rounded-full border border-lavender/40 bg-lavender/10" transition={{ duration: enabled ? 0.3 : 0 }} />
                 )}
                 {n.label}
               </a>
@@ -111,7 +113,7 @@ export function Navbar() {
         <div ref={menuRef} id="mobile-menu" role="dialog" aria-label="Site menu" className="h-[calc(100dvh-4rem)] overflow-y-auto bg-background px-5 pt-8 xl:hidden">
           <ul className="flex flex-col gap-2">
             {navItems.map((n, i) => (
-              <motion.li key={n.id} initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.05 }}>
+              <motion.li key={n.id} initial={enabled ? { opacity: 0, y: 16 } : false} animate={{ opacity: 1, y: 0 }} transition={{ duration: enabled ? 0.3 : 0, delay: enabled ? i * 0.05 : 0 }}>
                 <a
                   href={`#${n.id}`}
                   onClick={() => setOpen(false)}
