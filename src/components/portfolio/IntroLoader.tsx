@@ -9,7 +9,7 @@ const MAX_MS = 2700;
 const FADE_MS = 600;
 
 /**
- * Cinematic AR intro overlay. The CSS timeline also hides it on its own,
+ * Cinematic AAR intro overlay. The CSS timeline also hides it on its own,
  * so the page stays usable even if JavaScript never runs.
  */
 export function IntroLoader() {
@@ -53,10 +53,11 @@ export function IntroLoader() {
     <div className={`intro-overlay ${state === "leaving" ? "is-leaving" : ""}`} role="status" aria-live="polite" aria-label="Loading Ali Ahmad Rizvi's portfolio">
       <div className="intro-light" aria-hidden />
       <div className="relative flex flex-col items-center px-6 text-center">
-        <svg className="intro-logo h-20 w-auto sm:h-24" viewBox="0 0 140 100" fill="none" aria-hidden shapeRendering="geometricPrecision">
+        <svg className="intro-logo h-20 w-auto sm:h-24" viewBox="0 0 210 100" fill="none" aria-hidden shapeRendering="geometricPrecision">
           <path pathLength={1} d="M8 92 L38 8 L68 92 M20 62 H56" />
-          <path pathLength={1} className="intro-logo-r" d="M82 92 V8 H106 A21 21 0 0 1 106 50 H82 M104 50 L130 92" />
-          <circle cx="132" cy="14" r="3.5" className="intro-dot" />
+          <path pathLength={1} d="M78 92 L108 8 L138 92 M90 62 H126" />
+          <path pathLength={1} className="intro-logo-r" d="M152 92 V8 H176 A21 21 0 0 1 176 50 H152 M174 50 L200 92" />
+          <circle cx="202" cy="14" r="3.5" className="intro-dot" />
         </svg>
         <p className="intro-name font-display mt-8 text-xl font-bold tracking-[0.18em] sm:text-2xl">ALI AHMAD RIZVI</p>
         <p className="intro-sub label-mono mt-3 text-muted-foreground">Developer · Creator · Student</p>
