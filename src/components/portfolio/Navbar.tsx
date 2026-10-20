@@ -85,7 +85,7 @@ export function Navbar() {
                 className={`label-mono relative block rounded-full px-2 py-2 transition-colors hover:text-foreground ${shown === n.id ? "text-foreground" : "text-muted-foreground"}`}
               >
                 {shown === n.id && (
-                  <motion.span layoutId={enabled ? "nav-pill" : undefined} className="absolute inset-0 -z-10 rounded-full border border-lavender/40 bg-lavender/10" transition={{ duration: enabled ? 0.3 : 0 }} />
+                  <motion.span {...(enabled ? { layoutId: "nav-pill" } : {})} className="absolute inset-0 -z-10 rounded-full border border-lavender/40 bg-lavender/10" transition={{ duration: enabled ? 0.3 : 0 }} />
                 )}
                 {n.label}
               </a>

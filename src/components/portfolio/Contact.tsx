@@ -7,7 +7,7 @@ import { emailHref, externalProps, safeUrl } from "@/lib/links";
 function Ticket({ href, icon, label, value, external }: { href: string | null; icon: React.ReactNode; label: string; value: string; external?: boolean }) {
   const inner = (
     <>
-      <span className="flex items-center gap-3">
+      <span className="flex min-w-0 items-center gap-3">
         <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full border border-border">{icon}</span>
         <span className="min-w-0">
           <span className="label-mono block text-muted-foreground">{label}</span>
@@ -39,8 +39,8 @@ export function Contact() {
           </h2>
         </Reveal>
 
-        <div className="mt-16 grid gap-12 md:mt-24 md:grid-cols-[1fr_1.1fr] md:items-end">
-          <Reveal>
+        <div className="mt-16 grid grid-cols-[minmax(0,1fr)] gap-12 md:mt-24 md:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)] md:items-end">
+          <Reveal className="min-w-0">
             <p className="max-w-md text-lg leading-relaxed text-muted-foreground">
               I'm open to connecting with developers, collaborating on projects, learning from the community, and exploring relevant internship opportunities.
             </p>
@@ -51,7 +51,7 @@ export function Contact() {
               <p className="label-mono">Reply welcome ✦</p>
             </div>
           </Reveal>
-          <Reveal delay={0.1}>
+          <Reveal delay={0.1} className="min-w-0">
             <div className="border-b border-dashed border-border">
               <Ticket href={emailHref(site.email, "Let's build something meaningful")} icon={<Mail size={16} />} label="Email" value={emailHref(site.email) ? (site.email ?? "Address unavailable") : "Address coming soon"} />
               <Ticket href={safeUrl(site.github)} icon={<Github size={16} />} label="GitHub" value={safeUrl(site.github) ? "View my code" : "Link coming soon"} external />
