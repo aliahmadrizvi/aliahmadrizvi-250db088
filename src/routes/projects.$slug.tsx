@@ -71,7 +71,7 @@ function ProjectNotFound() {
 function ProjectDetailPage() {
   const { project } = Route.useLoaderData();
   const index = projects.findIndex((p) => p.slug === project.slug);
-  const next = projects[(index + 1) % projects.length];
+  const next = projects[(index + 1) % projects.length] ?? project;
   const github = safeUrl(project.github);
   const demo = safeUrl(project.demo);
 
