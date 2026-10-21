@@ -15,6 +15,9 @@ export const Route = createFileRoute("/projects/$slug")({
     return { project };
   },
   head: ({ loaderData }) => {
+    if (!loaderData) {
+      return { meta: [{ title: "Project — Ali Ahmad Rizvi" }] };
+    }
     const { project } = loaderData;
     const url = `https://aliahmadrizvi.lovable.app/projects/${project.slug}`;
     const title = `${project.title} — Ali Ahmad Rizvi`;
